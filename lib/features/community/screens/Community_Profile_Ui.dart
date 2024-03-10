@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:reddit_tutorial/core/common/error_text.dart';
-import 'package:reddit_tutorial/core/common/loader.dart';
-import 'package:reddit_tutorial/core/common/post_card.dart';
-import 'package:reddit_tutorial/features/auth/controlller/auth_controller.dart';
-import 'package:reddit_tutorial/features/community/controller/community_controller.dart';
-import 'package:reddit_tutorial/models/community_model.dart';
+import 'package:devnet2/core/common/error_text.dart';
+import 'package:devnet2/core/common/loader.dart';
+import 'package:devnet2/core/common/post_card.dart';
+import 'package:devnet2/features/authentication/controller/authentication_controller.dart';
+import 'package:devnet2/features/community/controller/community_controller.dart';
+import 'package:devnet2/models/community_model.dart';
 import 'package:routemaster/routemaster.dart';
 
 class CommunityScreen extends ConsumerWidget {
