@@ -6,7 +6,7 @@ class CommunitySettingsScreen extends StatelessWidget {
   const CommunitySettingsScreen({super.key, required this.name});
 
   void navigateToSettingsScreen(BuildContext context) {
-    Routemaster.of(context).push('/edit-community/$name');
+    Routemaster.of(context).push('/edit-community/:$name');
   }
 
   @override
