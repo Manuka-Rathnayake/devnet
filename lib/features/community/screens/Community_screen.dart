@@ -5,6 +5,7 @@ import 'package:devnet2/features/authentication/controller/authentication_contro
 import 'package:devnet2/features/community/controller/community_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:routemaster/routemaster.dart';
 
 class CommunityScreen extends ConsumerWidget {
   final String name;
@@ -12,6 +13,10 @@ class CommunityScreen extends ConsumerWidget {
     super.key,
     required this.name,
   });
+
+  void navigateToSettingsScreen(BuildContext context) {
+    Routemaster.of(context).push('/settings/:name');
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,13 +67,15 @@ class CommunityScreen extends ConsumerWidget {
                                 ),
                                 community.mods.contains(user.uid)
                                     ? OutlinedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          navigateToSettingsScreen(context);
+                                        },
                                         style: ElevatedButton.styleFrom(
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                           ),
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 25),
                                         ),
                                         child: Text('edit'),
@@ -80,7 +87,7 @@ class CommunityScreen extends ConsumerWidget {
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                           ),
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 25),
                                         ),
                                         child: Text(
