@@ -83,3 +83,4 @@ factory UserModel.fromMap(Map<String, dynamic> map) {
         isAuthenticated.hashCode;
   }
 }
+
