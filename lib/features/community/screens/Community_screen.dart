@@ -15,7 +15,7 @@ class CommunityScreen extends ConsumerWidget {
   });
 
   void navigateToSettingsScreen(BuildContext context) {
-    Routemaster.of(context).push('/settings/:name');
+    Routemaster.of(context).push('/settings/$name');
   }
 
   @override
