@@ -1,7 +1,7 @@
 import 'package:devnet2/features/authentication/controller/authentication_controller.dart';
 import 'package:devnet2/features/home/Delegates/search_comunity_delegate.dart';
 import 'package:devnet2/features/home/Drawers/community_list_drawer.dart';
-import 'package:devnet2/features/home/Drawers/profile_drawer.dart';
+//import 'package:devnet2/features/home/Drawers/profile_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -48,7 +48,7 @@ class HomeScreen extends ConsumerWidget {
         ],
       ),
       drawer: const CommunityListDrawer(),
-      endDrawer: const ProfileDrawer(),
+      //endDrawer: const ProfileDrawer(),
     );
   }
 }
