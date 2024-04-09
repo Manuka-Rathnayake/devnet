@@ -16,10 +16,9 @@ class AddPostScreen extends ConsumerWidget {
     double iconSize = kIsWeb ? 120 : 60;
 
     return Scaffold(
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+      body: Center(
+        
+        child: 
           GestureDetector(
             onTap: () => navigateToType(context, 'text'),
             child: SizedBox(
@@ -33,14 +32,15 @@ class AddPostScreen extends ConsumerWidget {
                 elevation: 16,
                 child: Center(
                   child: Icon(
-                    Icons.font_download_outlined,
+                    //Icons.font_download_outlined,
+                    Icons.border_color,
                     size: iconSize,
                   ),
                 ),
               ),
             ),
           ),
-        ],
+        
       ),
     );
   }

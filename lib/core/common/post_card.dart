@@ -31,7 +31,7 @@ class PostCard extends ConsumerWidget {
   }
 
   void navigateToUser(BuildContext context) {
-    Routemaster.of(context).push('/${post.uid}');
+    Routemaster.of(context).push('/user/${post.uid}');
   }
 
   void navigateToCommunity(BuildContext context) {
@@ -149,7 +149,8 @@ class PostCard extends ConsumerWidget {
                                     onPressed:
                                         isGuest ? () {} : () => upvotePost(ref),
                                     icon: Icon(
-                                      Constants.up,
+                                      
+                                      Icons.thumb_up,
                                       size: 30,
                                       color: post.upvotes.contains(user.uid)
                                           ? Pallete.redColor
@@ -157,7 +158,7 @@ class PostCard extends ConsumerWidget {
                                     ),
                                   ),
                                   Text(
-                                    '${post.upvotes.length - post.downvotes.length == 0 ? 'Vote' : post.upvotes.length - post.downvotes.length}',
+                                    '${post.upvotes.length - post.downvotes.length == 0 ? '' : post.upvotes.length - post.downvotes.length}',
                                     style: const TextStyle(fontSize: 17),
                                   ),
                                   IconButton(
@@ -165,7 +166,8 @@ class PostCard extends ConsumerWidget {
                                         ? () {}
                                         : () => downvotePost(ref),
                                     icon: Icon(
-                                      Constants.down,
+                              
+                                      Icons.thumb_down,
                                       size: 30,
                                       color: post.downvotes.contains(user.uid)
                                           ? Pallete.blueColor
@@ -189,26 +191,6 @@ class PostCard extends ConsumerWidget {
                                   ),
                                 ],
                               ),
-                              ref
-                                  .watch(getCommunityByNameProvider(
-                                      post.communityName))
-                                  .when(
-                                    data: (data) {
-                                      if (data.mods.contains(user.uid)) {
-                                        return IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.admin_panel_settings,
-                                          ),
-                                        );
-                                      }
-                                      return const SizedBox();
-                                    },
-                                    error: (error, stackTrace) => ErrorText(
-                                      error: error.toString(),
-                                    ),
-                                    loading: () => const Loader(),
-                                  ),
                             ],
                           ),
                         ],

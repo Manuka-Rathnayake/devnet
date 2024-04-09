@@ -4,6 +4,7 @@ import 'package:devnet2/core/common/sign_in_button.dart';
 import 'package:devnet2/features/authentication/controller/authentication_controller.dart';
 import 'package:devnet2/features/community/controller/community_controller.dart';
 import 'package:devnet2/models/community_model.dart';
+import 'package:devnet2/theme/colorPalette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
@@ -23,13 +24,14 @@ class CommunityListDrawer extends ConsumerWidget {
     final user = ref.watch(userProvider)!;
     final isGuest = !user.isAuthenticated;
     return Drawer(
+      backgroundColor: Pallete.greyColor,
       child: SafeArea(
           child: Column(
         children: [
           isGuest
               ? const SignInButton()
               : ListTile(
-                  title: Text('Create a community'),
+                  title: Text('New community'),
                   leading: Icon(Icons.add),
                   onTap: () => navigateToCreateCommunity(context),
                 ),
