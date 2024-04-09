@@ -74,7 +74,11 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
                     decoration: const InputDecoration(
                       filled: true,
                       hintText: 'Title',
-                      border: InputBorder.none,
+                      //border: InputBorder.none,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderSide: BorderSide.none,
+                      ),
                       contentPadding: EdgeInsets.all(18),
                     ),
                     maxLength: 30,
@@ -86,7 +90,10 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
                       decoration: const InputDecoration(
                         filled: true,
                         hintText: 'Content',
-                        border: InputBorder.none,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderSide: BorderSide.none,
+                        ),
                         contentPadding: EdgeInsets.all(18),
                       ),
                       maxLines: 5,

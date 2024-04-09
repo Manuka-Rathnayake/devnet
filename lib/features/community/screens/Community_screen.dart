@@ -17,7 +17,7 @@ class CommunityScreen extends ConsumerWidget {
   });
 
   void navigateToSettingsScreen(BuildContext context) {
-    Routemaster.of(context).push('/settings/$name');
+    Routemaster.of(context).push('/edit-community/$name');
   }
 
   void joinCommunity(WidgetRef ref, Community community, BuildContext context) {

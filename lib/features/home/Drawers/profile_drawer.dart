@@ -19,6 +19,7 @@ class ProfileDrawer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;
     return Drawer(
+      backgroundColor: Pallete.greyColor,
       child: SafeArea(
         child: Column(
           children: [
@@ -41,7 +42,7 @@ class ProfileDrawer extends ConsumerWidget {
             ),
             const Divider(),
             ListTile(
-              title: Text('User Profile'),
+              title: Text('My Profile'),
               leading: Icon(Icons.person_2),
               onTap: () => navigateToUserProfile(context, user.uid),
             ),
@@ -53,7 +54,6 @@ class ProfileDrawer extends ConsumerWidget {
               ),
               onTap: () => logOut(ref),
             ),
-            Switch.adaptive(value: true, onChanged: (val) {}),
           ],
         ),
       ),

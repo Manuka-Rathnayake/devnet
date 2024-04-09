@@ -45,7 +45,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         centerTitle: false,
         leading: Builder(builder: (context) {
           return IconButton(
-            icon: Icon(Icons.menu),
+            icon: Icon(Icons.widgets),
             onPressed: () => displayDrawer(context),
           );
         }),

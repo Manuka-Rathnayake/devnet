@@ -15,21 +15,17 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading = ref.watch(authControllerProvider);
+    final Shader textShader = LinearGradient(
+      colors: [
+        Color(0xFFBE1010), // Start color of the gradient
+        Color(0xFF5C358E), // Middle color of the gradient
+        Color(0xFF4140B3), // End color of the gradient
+      ],
+      begin: Alignment.centerLeft,
+      end: Alignment.centerRight,
+    ).createShader(Rect.fromLTWH(100.0, 0.0, 150.0, 70.0));
     return Scaffold(
-        appBar: AppBar(
-          title: Image.asset(
-            Constants.logoPath,
-            height: 40,
-          ),
-          actions: [
-            TextButton(
-                onPressed: () => signInAsGuest(ref, context),
-                child: const Text(
-                  "Skip",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ))
-          ],
-        ),
+        
         body: isLoading
             ? const Loader()
             : Column(
@@ -37,23 +33,45 @@ class LoginScreen extends ConsumerWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  const Text(
-                    "Welcome to DevNet",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5),
-                  ),
                   const SizedBox(height: 30),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
                       Constants.loginEmotePath,
-                      height: 400,
+                      height: 200,
+                    ),
+                  ),
+                  Text(
+                    'DevNet.',
+                    style: TextStyle(
+                      fontSize: 42,
+                      fontWeight: FontWeight.bold,
+                      // Apply the shader to the text
+                      foreground: Paint()..shader = textShader,
                     ),
                   ),
                   const SizedBox(height: 20),
                   const SignInButton(),
+                  const SizedBox(height: 5),
+                  ElevatedButton(
+                    onPressed: () {
+                      signInAsGuest(ref, context);
+                    },
+                    child: const Text(
+                      "Explore First",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 18, // Text color is black
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.black, // Text color is black
+                      // Border color and width
+                      elevation: 0, // Remove shadow
+                    ),
+                  )
                 ],
               ));
   }

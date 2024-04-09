@@ -35,7 +35,7 @@ class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create a community'),
+        title: const Text('Start a community'),
       ),
       body: isLoading
           ? const Loader()
@@ -47,15 +47,20 @@ class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
                   children: [
                     const Align(
                       alignment: Alignment.topLeft,
-                      child: Text('Community name'),
+                      child: Text('Community Name'),
                     ),
                     const SizedBox(height: 10),
                     TextField(
                       controller: communityNameController,
                       decoration: const InputDecoration(
-                        hintText: 'Community_name',
+                        hintText: '|',
                         filled: true,
-                        border: InputBorder.none,
+                        //border: InputBorder.none,
+                        border: OutlineInputBorder(
+                          //new
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderSide: BorderSide.none,
+                        ),
                         contentPadding: const EdgeInsets.all(18),
                       ),
                       maxLength: 21,
