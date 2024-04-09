@@ -1,5 +1,7 @@
 import 'package:devnet2/core/common/error_text.dart';
 import 'package:devnet2/core/common/loader.dart';
+import 'package:devnet2/core/common/sign_in_button.dart';
+import 'package:devnet2/features/authentication/controller/authentication_controller.dart';
 import 'package:devnet2/features/community/controller/community_controller.dart';
 import 'package:devnet2/models/community_model.dart';
 import 'package:flutter/material.dart';
@@ -18,38 +20,43 @@ class CommunityListDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProvider)!;
+    final isGuest = !user.isAuthenticated;
     return Drawer(
       child: SafeArea(
           child: Column(
         children: [
-          ListTile(
-            title: Text('Create a community'),
-            leading: Icon(Icons.add),
-            onTap: () => navigateToCreateCommunity(context),
-          ),
-          ref.watch(userCommunitiesProvider).when(
-                data: (communities) => Expanded(
-                  child: ListView.builder(
-                    itemCount: communities.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final community = communities[index];
-                      return ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(community.avatar),
-                        ),
-                        title: Text('${community.name}'),
-                        onTap: () {
-                          navigateToCommunity(context, community);
-                        },
-                      );
-                    },
+          isGuest
+              ? const SignInButton()
+              : ListTile(
+                  title: Text('Create a community'),
+                  leading: Icon(Icons.add),
+                  onTap: () => navigateToCreateCommunity(context),
+                ),
+          if (!isGuest)
+            ref.watch(userCommunitiesProvider).when(
+                  data: (communities) => Expanded(
+                    child: ListView.builder(
+                      itemCount: communities.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final community = communities[index];
+                        return ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(community.avatar),
+                          ),
+                          title: Text('${community.name}'),
+                          onTap: () {
+                            navigateToCommunity(context, community);
+                          },
+                        );
+                      },
+                    ),
                   ),
-                ),
-                error: (error, StackTrace) => ErrorText(
-                  error: error.toString(),
-                ),
-                loading: () => const Loader(),
-              )
+                  error: (error, StackTrace) => ErrorText(
+                    error: error.toString(),
+                  ),
+                  loading: () => const Loader(),
+                )
         ],
       )),
     );

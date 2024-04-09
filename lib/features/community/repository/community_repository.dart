@@ -6,6 +6,7 @@ import 'package:devnet2/core/failure.dart';
 import 'package:devnet2/core/providers/firebase_providers.dart';
 import 'package:devnet2/core/type_defs.dart';
 import 'package:devnet2/models/community_model.dart';
+import 'package:devnet2/models/post_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -29,6 +30,34 @@ class CommunityRepository {
       return right(_communities.doc(community.name).set(community.toMap()));
     } on FirebaseException catch (e) {
       return left(Failure(e.message!));
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  FutureVoid joinCommunity(String communityName, String userId) async {
+    try {
+      return right(
+        _communities.doc(communityName).update({
+          'members': FieldValue.arrayUnion([userId])
+        }),
+      );
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  FutureVoid leaveCommunity(String communityName, String userId) async {
+    try {
+      return right(
+        _communities.doc(communityName).update({
+          'members': FieldValue.arrayRemove([userId])
+        }),
+      );
+    } on FirebaseException catch (e) {
+      throw e.message!;
     } catch (e) {
       return left(Failure(e.toString()));
     }
@@ -84,6 +113,25 @@ class CommunityRepository {
       return communities;
     });
   }
+
+  Stream<List<Post>> getCommunityPosts(String name) {
+    return _posts
+        .where('communityName', isEqualTo: name)
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map(
+          (event) => event.docs
+              .map(
+                (e) => Post.fromMap(
+                  e.data() as Map<String, dynamic>,
+                ),
+              )
+              .toList(),
+        );
+  }
+
+  CollectionReference get _posts =>
+      _firestore.collection(FirebaseConstants.postsCollection);
 
   CollectionReference get _communities =>
       _firestore.collection(FirebaseConstants.communitiesCollection);

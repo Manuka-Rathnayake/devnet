@@ -1,11 +1,14 @@
 import 'package:devnet2/core/constants/constants.dart';
+import 'package:devnet2/core/failure.dart';
 import 'package:devnet2/core/providers/storage_repo_provider.dart';
 import 'package:devnet2/core/utilities.dart';
 import 'package:devnet2/features/authentication/controller/authentication_controller.dart';
 import 'package:devnet2/features/community/repository/community_repository.dart';
 import 'package:devnet2/models/community_model.dart';
+import 'package:devnet2/models/post_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:routemaster/routemaster.dart';
 import 'dart:io';
 
@@ -30,13 +33,13 @@ final getCommunityByNameProvider = StreamProvider.family((ref, String name) {
       .getCommunityByName(name);
 });
 
-final searchCommunityProvider = StreamProvider.family(
-  (ref, String query) {
-    return ref
-        .watch(communityControllerProvider.notifier)
-        .searchCommunity(query);
-  },
-);
+final searchCommunityProvider = StreamProvider.family((ref, String query) {
+  return ref.watch(communityControllerProvider.notifier).searchCommunity(query);
+});
+
+final getCommunityPostsProvider = StreamProvider.family((ref, String name) {
+  return ref.read(communityControllerProvider.notifier).getCommunityPosts(name);
+});
 
 class CommunityController extends StateNotifier<bool> {
   final CommunityRepository _communityRepository;
@@ -69,6 +72,30 @@ class CommunityController extends StateNotifier<bool> {
       showSnackBar(context, 'Successfully Created Community');
       Routemaster.of(context).pop();
     });
+  }
+
+  void joinCommunity(Community commmunity, BuildContext context) async {
+    final user = _ref.read(userProvider)!;
+
+    Either<Failure, void> res;
+
+    if (commmunity.members.contains(user!.uid)) {
+      res =
+          await _communityRepository.leaveCommunity(commmunity.name, user.uid);
+    } else {
+      res = await _communityRepository.joinCommunity(commmunity.name, user.uid);
+    }
+
+    res.fold(
+      (l) => showSnackBar(context, l.message),
+      (r) {
+        if (commmunity.members.contains(user!.uid)) {
+          showSnackBar(context, 'Successfully Left Community');
+        } else {
+          showSnackBar(context, 'Successfully Joined Community');
+        }
+      },
+    );
   }
 
   Stream<List<Community>> getUserCommunities() {
@@ -118,5 +145,9 @@ class CommunityController extends StateNotifier<bool> {
 
   Stream<List<Community>> searchCommunity(String query) {
     return _communityRepository.searchCommunity(query);
+  }
+
+  Stream<List<Post>> getCommunityPosts(String name) {
+    return _communityRepository.getCommunityPosts(name);
   }
 }

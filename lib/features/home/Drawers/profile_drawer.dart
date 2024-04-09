@@ -2,12 +2,17 @@ import 'package:devnet2/features/authentication/controller/authentication_contro
 import 'package:devnet2/theme/colorPalette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:routemaster/routemaster.dart';
 
 class ProfileDrawer extends ConsumerWidget {
   const ProfileDrawer({super.key});
 
   void logOut(WidgetRef ref) {
     ref.read(authControllerProvider.notifier).logOut();
+  }
+
+  void navigateToUserProfile(BuildContext context, String uid) {
+    Routemaster.of(context).push('/user/$uid');
   }
 
   @override
@@ -38,7 +43,7 @@ class ProfileDrawer extends ConsumerWidget {
             ListTile(
               title: Text('User Profile'),
               leading: Icon(Icons.person_2),
-              onTap: () {},
+              onTap: () => navigateToUserProfile(context, user.uid),
             ),
             ListTile(
               title: Text('Sign Out'),
