@@ -41,7 +41,7 @@ class _EditCommunityScreenState extends ConsumerState<EditCommunityScreen> {
     final res = await pickImage();
     if (res != null) {
       setState(() {
-        bannerFile = File(res.files.first.path!);
+        profileFile = File(res.files.first.path!);
       });
     }
   }
