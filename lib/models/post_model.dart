@@ -6,8 +6,8 @@ class Post {
   final String? description;
   final String communityName;
   final String communityProfilePic;
-  final List<String> upvotes;
-  final List<String> downvotes;
+  final List<String> like;
+  final List<String> dislike;
   final int commentCount;
   final String username;
   final String uid;
@@ -20,8 +20,8 @@ class Post {
     this.description,
     required this.communityName,
     required this.communityProfilePic,
-    required this.upvotes,
-    required this.downvotes,
+    required this.like,
+    required this.dislike,
     required this.commentCount,
     required this.username,
     required this.uid,
@@ -51,8 +51,8 @@ class Post {
       description: description ?? this.description,
       communityName: communityName ?? this.communityName,
       communityProfilePic: communityProfilePic ?? this.communityProfilePic,
-      upvotes: upvotes ?? this.upvotes,
-      downvotes: downvotes ?? this.downvotes,
+      like: upvotes ?? this.like,
+      dislike: downvotes ?? this.dislike,
       commentCount: commentCount ?? this.commentCount,
       username: username ?? this.username,
       uid: uid ?? this.uid,
@@ -68,8 +68,8 @@ class Post {
       'description': description,
       'communityName': communityName,
       'communityProfilePic': communityProfilePic,
-      'upvotes': upvotes,
-      'downvotes': downvotes,
+      'like': like,
+      'dislike': dislike,
       'commentCount': commentCount,
       'username': username,
       'uid': uid,
@@ -85,8 +85,8 @@ class Post {
       description: map['description'],
       communityName: map['communityName'] ?? '',
       communityProfilePic: map['communityProfilePic'] ?? '',
-      upvotes: List<String>.from(map['upvotes']),
-      downvotes: List<String>.from(map['downvotes']),
+      like: List<String>.from(map['like']),
+      dislike: List<String>.from(map['dislike']),
       commentCount: map['commentCount']?.toInt() ?? 0,
       username: map['username'] ?? '',
       uid: map['uid'] ?? '',
@@ -97,7 +97,7 @@ class Post {
 
   @override
   String toString() {
-    return 'Post(id: $id, title: $title, description: $description, communityName: $communityName, communityProfilePic: $communityProfilePic, upvotes: $upvotes, downvotes: $downvotes, commentCount: $commentCount, username: $username, uid: $uid, type: $type, createdAt: $createdAt)';
+    return 'Post(id: $id, title: $title, description: $description, communityName: $communityName, communityProfilePic: $communityProfilePic, like: $like, dislike: $dislike, commentCount: $commentCount, username: $username, uid: $uid, type: $type, createdAt: $createdAt)';
   }
 
   @override
@@ -110,8 +110,8 @@ class Post {
         other.description == description &&
         other.communityName == communityName &&
         other.communityProfilePic == communityProfilePic &&
-        listEquals(other.upvotes, upvotes) &&
-        listEquals(other.downvotes, downvotes) &&
+        listEquals(other.like, like) &&
+        listEquals(other.dislike, dislike) &&
         other.commentCount == commentCount &&
         other.username == username &&
         other.uid == uid &&
@@ -126,8 +126,8 @@ class Post {
         description.hashCode ^
         communityName.hashCode ^
         communityProfilePic.hashCode ^
-        upvotes.hashCode ^
-        downvotes.hashCode ^
+        like.hashCode ^
+        dislike.hashCode ^
         commentCount.hashCode ^
         username.hashCode ^
         uid.hashCode ^

@@ -21,13 +21,14 @@ class PostCard extends ConsumerWidget {
   void deletePost(WidgetRef ref, BuildContext context) async {
     ref.read(postControllerProvider.notifier).deletePost(post, context);
   }
+  //Use call from postControllerProvider
 
-  void upvotePost(WidgetRef ref) async {
-    ref.read(postControllerProvider.notifier).upvote(post);
+  void likePost(WidgetRef ref) async {
+    ref.read(postControllerProvider.notifier).like(post);
   }
 
-  void downvotePost(WidgetRef ref) async {
-    ref.read(postControllerProvider.notifier).downvote(post);
+  void dislikePost(WidgetRef ref) async {
+    ref.read(postControllerProvider.notifier).dislike(post);
   }
 
   void navigateToUser(BuildContext context) {
@@ -140,6 +141,7 @@ class PostCard extends ConsumerWidget {
                                 ),
                               ),
                             ),
+                          //Liking the post
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -147,29 +149,31 @@ class PostCard extends ConsumerWidget {
                                 children: [
                                   IconButton(
                                     onPressed:
-                                        isGuest ? () {} : () => upvotePost(ref),
+                                        isGuest ? () {} : () => likePost(ref),
                                     icon: Icon(
-                                      
                                       Icons.thumb_up,
                                       size: 30,
-                                      color: post.upvotes.contains(user.uid)
+                                      color: post.like.contains(user.uid)
                                           ? Pallete.redColor
                                           : null,
                                     ),
                                   ),
+
+                                  //Displaying the number of likes
+
                                   Text(
-                                    '${post.upvotes.length - post.downvotes.length == 0 ? '' : post.upvotes.length - post.downvotes.length}',
+                                    '${post.like.length - post.dislike.length == 0 ? '' : post.like.length - post.dislike.length}',
                                     style: const TextStyle(fontSize: 17),
                                   ),
+                                  //Disiking the post
                                   IconButton(
                                     onPressed: isGuest
                                         ? () {}
-                                        : () => downvotePost(ref),
+                                        : () => dislikePost(ref),
                                     icon: Icon(
-                              
                                       Icons.thumb_down,
                                       size: 30,
-                                      color: post.downvotes.contains(user.uid)
+                                      color: post.dislike.contains(user.uid)
                                           ? Pallete.blueColor
                                           : null,
                                     ),
@@ -177,6 +181,7 @@ class PostCard extends ConsumerWidget {
                                 ],
                               ),
                               Row(
+                                // Disoplaying comments
                                 children: [
                                   IconButton(
                                     onPressed: () =>

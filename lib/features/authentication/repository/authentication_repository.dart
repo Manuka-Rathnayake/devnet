@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+//authentication logic
 final authRepositoryProvider = Provider((ref) => AuthRepository(
       firestore: ref.read(firestoreProvider),
       auth: ref.read(authProvider),
@@ -33,7 +34,7 @@ class AuthRepository {
       _firestore.collection(FirebaseConstants.usersCollection);
 
   Stream<User?> get authStateChange => _auth.authStateChanges();
-
+// sign in with gmail
   FutureEither<UserModel> signInWithGoogle(bool isFromLogin) async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
@@ -66,6 +67,7 @@ class AuthRepository {
       }
       return right(userModel);
     } on FirebaseException catch (e) {
+      ///handles errors thrown by firebase
       throw e.message!;
     } catch (e) {
       return left(Failure(e.toString()));
@@ -73,6 +75,7 @@ class AuthRepository {
   }
 
   FutureEither<UserModel> signInAsGuest() async {
+    // sign in as guest setting values
     try {
       var userCredential = await _auth.signInAnonymously();
 
