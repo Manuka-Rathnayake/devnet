@@ -80,38 +80,39 @@ class PostRepository {
     }
   }
 
-  void upvote(Post post, String userId) async {
-    if (post.downvotes.contains(userId)) {
+// liking and disliking
+  void like(Post post, String userId) async {
+    if (post.dislike.contains(userId)) {
       _posts.doc(post.id).update({
-        'downvotes': FieldValue.arrayRemove([userId]),
+        'dislike': FieldValue.arrayRemove([userId]),
       });
     }
 
-    if (post.upvotes.contains(userId)) {
+    if (post.like.contains(userId)) {
       _posts.doc(post.id).update({
-        'upvotes': FieldValue.arrayRemove([userId]),
+        'like': FieldValue.arrayRemove([userId]),
       });
     } else {
       _posts.doc(post.id).update({
-        'upvotes': FieldValue.arrayUnion([userId]),
+        'like': FieldValue.arrayUnion([userId]),
       });
     }
   }
 
-  void downvote(Post post, String userId) async {
-    if (post.upvotes.contains(userId)) {
+  void dislike(Post post, String userId) async {
+    if (post.like.contains(userId)) {
       _posts.doc(post.id).update({
-        'upvotes': FieldValue.arrayRemove([userId]),
+        'like': FieldValue.arrayRemove([userId]),
       });
     }
 
-    if (post.downvotes.contains(userId)) {
+    if (post.dislike.contains(userId)) {
       _posts.doc(post.id).update({
-        'downvotes': FieldValue.arrayRemove([userId]),
+        'dislike': FieldValue.arrayRemove([userId]),
       });
     } else {
       _posts.doc(post.id).update({
-        'downvotes': FieldValue.arrayUnion([userId]),
+        'dislike': FieldValue.arrayUnion([userId]),
       });
     }
   }
@@ -122,6 +123,8 @@ class PostRepository {
         .snapshots()
         .map((event) => Post.fromMap(event.data() as Map<String, dynamic>));
   }
+
+//adding comments
 
   FutureVoid addComment(Comment comment) async {
     try {
@@ -136,6 +139,8 @@ class PostRepository {
       return left(Failure(e.toString()));
     }
   }
+
+// showing comments
 
   Stream<List<Comment>> getCommentsOfPost(String postId) {
     return _comments

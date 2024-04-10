@@ -19,6 +19,7 @@ class CommentsScreen extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _CommentsScreenState();
 }
 
+//text controller
 class _CommentsScreenState extends ConsumerState<CommentsScreen> {
   final commentController = TextEditingController();
 
@@ -28,6 +29,7 @@ class _CommentsScreenState extends ConsumerState<CommentsScreen> {
     commentController.dispose();
   }
 
+//Adding comments
   void addComment(Post post) {
     ref.read(postControllerProvider.notifier).addComment(
           context: context,
@@ -43,7 +45,7 @@ class _CommentsScreenState extends ConsumerState<CommentsScreen> {
   Widget build(BuildContext context) {
     final user = ref.watch(userProvider)!;
     final isGuest = !user.isAuthenticated;
-
+//takes the postID and uses the getPostByIdProvider to get the post data
     return Scaffold(
       appBar: AppBar(),
       body: ref.watch(getPostByIdProvider(widget.postId)).when(
@@ -51,6 +53,7 @@ class _CommentsScreenState extends ConsumerState<CommentsScreen> {
               return Column(
                 children: [
                   PostCard(post: data),
+                  //Check user type for comment box
                   if (!isGuest)
                     TextField(
                       onSubmitted: (val) => addComment(data),
@@ -61,6 +64,7 @@ class _CommentsScreenState extends ConsumerState<CommentsScreen> {
                         border: InputBorder.none,
                       ),
                     ),
+
                   ref.watch(getPostCommentsProvider(widget.postId)).when(
                         data: (data) {
                           return Expanded(
@@ -68,11 +72,13 @@ class _CommentsScreenState extends ConsumerState<CommentsScreen> {
                               itemCount: data.length,
                               itemBuilder: (BuildContext context, int index) {
                                 final comment = data[index];
+                                //fetch post data and render card
                                 return CommentCard(comment: comment);
                               },
                             ),
                           );
                         },
+                        //handles rrors and loading
                         error: (error, stackTrace) {
                           return ErrorText(
                             error: error.toString(),

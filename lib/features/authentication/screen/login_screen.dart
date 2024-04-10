@@ -25,7 +25,6 @@ class LoginScreen extends ConsumerWidget {
       end: Alignment.centerRight,
     ).createShader(Rect.fromLTWH(100.0, 0.0, 150.0, 70.0));
     return Scaffold(
-        
         body: isLoading
             ? const Loader()
             : Column(
@@ -46,7 +45,6 @@ class LoginScreen extends ConsumerWidget {
                     style: TextStyle(
                       fontSize: 42,
                       fontWeight: FontWeight.bold,
-                      // Apply the shader to the text
                       foreground: Paint()..shader = textShader,
                     ),
                   ),
@@ -55,21 +53,20 @@ class LoginScreen extends ConsumerWidget {
                   const SizedBox(height: 5),
                   ElevatedButton(
                     onPressed: () {
-                      signInAsGuest(ref, context);
+                      signInAsGuest(ref, context); // sign in as guest
                     },
                     child: const Text(
                       "Explore First",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
-                        fontSize: 18, // Text color is black
+                        fontSize: 18,
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
-                      backgroundColor: Colors.black, // Text color is black
-                      // Border color and width
-                      elevation: 0, // Remove shadow
+                      backgroundColor: Colors.black,
+                      elevation: 0,
                     ),
                   )
                 ],

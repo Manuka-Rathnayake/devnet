@@ -72,8 +72,8 @@ class PostController extends StateNotifier<bool> {
       title: title,
       communityName: selectedCommunity.name,
       communityProfilePic: selectedCommunity.avatar,
-      upvotes: [],
-      downvotes: [],
+      like: [],
+      dislike: [],
       commentCount: 0,
       username: user.name,
       uid: user.uid,
@@ -107,14 +107,15 @@ class PostController extends StateNotifier<bool> {
         (r) => showSnackBar(context, 'Post Deleted successfully!'));
   }
 
-  void upvote(Post post) {
+//likes and dislikes post functions
+  void like(Post post) {
     final uid = _ref.read(userProvider)!.uid;
-    _postRepository.upvote(post, uid);
+    _postRepository.like(post, uid);
   }
 
-  void downvote(Post post) {
+  void dislike(Post post) {
     final uid = _ref.read(userProvider)!.uid;
-    _postRepository.downvote(post, uid);
+    _postRepository.dislike(post, uid);
   }
 
   Stream<Post> getPostById(String postId) {

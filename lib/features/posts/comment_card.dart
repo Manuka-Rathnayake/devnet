@@ -20,6 +20,7 @@ class CommentCard extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            //display profile pic
             children: [
               CircleAvatar(
                 backgroundImage: NetworkImage(
@@ -33,12 +34,14 @@ class CommentCard extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //display username
                       Text(
                         '${comment.username}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      //display the comment
                       Text(comment.text)
                     ],
                   ),
@@ -46,7 +49,6 @@ class CommentCard extends ConsumerWidget {
               ),
             ],
           ),
-          
         ],
       ),
     );

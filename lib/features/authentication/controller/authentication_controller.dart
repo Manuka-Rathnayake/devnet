@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final userProvider = StateProvider<UserModel?>((ref) => null);
-
+//Keeps track of the user state
 final authControllerProvider = StateNotifierProvider<AuthController, bool>(
   (ref) => AuthController(
     authRepository: ref.watch(authRepositoryProvider),
@@ -35,7 +35,7 @@ class AuthController extends StateNotifier<bool> {
         super(false);
 
   Stream<User?> get authStateChange => _authRepository.authStateChange;
-
+//displays the message
   void signInWithGoogle(BuildContext context, bool isFromLogin) async {
     state = true;
     final user = await _authRepository.signInWithGoogle(isFromLogin);
